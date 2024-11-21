@@ -327,6 +327,14 @@ impl SerialPort {
 	pub fn read_cd(&self) -> std::io::Result<bool> {
 		read_pin(&self.file, libc::TIOCM_CD)
 	}
+
+	pub fn send_break(&self) -> std::io::Result<()> {
+		let duration = 0; // this is mostly ignored anyway
+		unsafe {
+			check(libc::tcsendbreak(self.file.as_raw_fd(), duration))?;
+		}
+		Ok(())
+	}
 }
 
 /// Wait for a file to be readable or writable.
