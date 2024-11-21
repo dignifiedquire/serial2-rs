@@ -335,6 +335,19 @@ impl SerialPort {
 		}
 		Ok(())
 	}
+
+	pub fn set_break_bit(&self, state: bool) -> std::io::Result<()> {
+		if state {
+			unsafe {
+				check(libc::ioctl(self.file.as_raw_fd(), libc::TIOCSBRK as _))?;
+			}
+		} else {
+			unsafe {
+				check(libc::ioctl(self.file.as_raw_fd(), libc::TIOCCBRK as _))?;
+			}
+		}
+		Ok(())
+	}
 }
 
 /// Wait for a file to be readable or writable.

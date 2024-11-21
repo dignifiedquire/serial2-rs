@@ -475,6 +475,11 @@ impl SerialPort {
 	pub fn send_break(&self) -> std::io::Result<()> {
 		self.inner.send_break()
 	}
+
+	/// Set or clear the break bit.
+	pub fn set_break_bit(&self, state: bool) -> std::io::Result<()> {
+		self.inner.set_break_bit(state)
+	}
 }
 
 impl std::fmt::Debug for SerialPort {
